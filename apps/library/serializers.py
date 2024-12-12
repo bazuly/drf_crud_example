@@ -4,7 +4,6 @@ from .models import LibraryModel, FavoriteBookModel
 
 class LibraryModelSerializer(serializers.ModelSerializer):
     creator = serializers.ReadOnlyField(source='creator.username')
-    # average_rating = serializers.FloatField(source='average_rating', read_only=True)
 
     class Meta:
         model = LibraryModel
@@ -19,6 +18,7 @@ class LibraryModelSerializer(serializers.ModelSerializer):
 
 
 class FavoriteModelSerializer(serializers.ModelSerializer):
+    book = LibraryModelSerializer()
     class Meta:
         model = FavoriteBookModel
         fields = [

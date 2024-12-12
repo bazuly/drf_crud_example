@@ -59,6 +59,4 @@ class RemoveFavoriteAPIView(DestroyAPIView):
     def perform_destroy(self, instance):
         return FavoriteBookModel.objects.filter(user=self.request.user, id=instance.id).delete()
 
-# в качестве тестовго задания добавить вывод сообщения в терминле с помощью реббит например
-# что данная книга удалена из избранного и сделать счетчик, сколько юзеров например добавило
-# данную книгу в избранное
+
