@@ -18,7 +18,7 @@ class LibraryModel(models.Model):
         ordering = ["-created_at"]
 
 
-class RatingModel(models.Model):
+class BookRatingModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(LibraryModel, on_delete=models.CASCADE, related_name="ratings")
     rating = models.IntegerField(default=1)

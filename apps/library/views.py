@@ -8,8 +8,8 @@ from rest_framework.generics import (
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django_filters import rest_framework as filters
 
-from .serializers import LibraryModelSerializer, FavoriteModelSerializer
-from .models import LibraryModel, FavoriteBookModel
+from .serializers import LibraryModelSerializer, FavoriteModelSerializer, LibraryRatingModelSerializer
+from .models import LibraryModel, FavoriteBookModel, BookRatingModel
 from .library_pagination import CustomLibraryPagination
 from .filters import LibraryFilter
 from .permissions import IsOwnerOrReadOnly
@@ -31,6 +31,12 @@ class LibraryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = LibraryModel.objects.all()
     serializer_class = LibraryModelSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsAdminUser]
+
+
+class LibraryRatingCreateListAPIView(ListCreateAPIView):
+    queryset = BookRatingModel.objects.all()
+    serializer_class = LibraryRatingModelSerializer
+    permission_classes = [IsAuthenticated, ]
 
 
 class CreateFavoriteAPIView(CreateAPIView):
@@ -58,5 +64,3 @@ class RemoveFavoriteAPIView(DestroyAPIView):
 
     def perform_destroy(self, instance):
         return FavoriteBookModel.objects.filter(user=self.request.user, id=instance.id).delete()
-
-
