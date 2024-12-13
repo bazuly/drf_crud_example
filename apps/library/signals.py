@@ -1,9 +1,9 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from .models import RatingModel
+from .models import BookRatingModel
 
 
-@receiver([post_save, post_delete], sender=RatingModel)
+@receiver([post_save, post_delete], sender=BookRatingModel)
 def update_average_rating(sender, instance, **kwargs):
     book = instance.book
     ratings = book.ratings.all()

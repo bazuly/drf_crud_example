@@ -4,6 +4,9 @@ from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
     DestroyAPIView,
+    UpdateAPIView,
+    RetrieveAPIView
+
 )
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django_filters import rest_framework as filters
@@ -33,11 +36,26 @@ class LibraryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsAdminUser]
 
 
-class LibraryRatingCreateListAPIView(ListCreateAPIView):
+class BookRatingCreateAPIView(CreateAPIView):
     queryset = BookRatingModel.objects.all()
     serializer_class = LibraryRatingModelSerializer
     permission_classes = [IsAuthenticated, ]
 
+
+
+class BookRatingRetrieveAPIView(RetrieveAPIView):
+    queryset = BookRatingModel.objects.all()
+    serializer_class = LibraryRatingModelSerializer
+    permission_classes = [IsAuthenticated, ]
+
+
+class BookRatingRemoveAPIView(DestroyAPIView):
+    queryset = BookRatingModel.objects.all()
+    serializer_class = LibraryRatingModelSerializer
+    permission_classes = [IsAuthenticated,]
+
+    def perform_destroy(self, instance):
+        return BookRatingModel.objects.filter(user=self.request.user, id=instance.id).delete()
 
 class CreateFavoriteAPIView(CreateAPIView):
     queryset = FavoriteBookModel.objects.all()

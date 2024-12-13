@@ -33,7 +33,7 @@ class LibraryRatingModelSerializer(serializers.ModelSerializer):
         user = data['user']
         book = data['book']
 
-        if FavoriteBookModel.objects.filter(user=user, book=book).exists():
+        if BookRatingModel.objects.filter(user=user, book=book).exists():
             raise serializers.ValidationError('You already set rating')
         return data
 
