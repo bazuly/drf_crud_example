@@ -9,7 +9,7 @@ class LibraryModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    average_rating = models.FloatField(default=0.0, blank=True, null=True)
+    rating = models.FloatField(default=0.0, blank=True, null=True)
 
     def __str__(self):
         return f"{self.title} {self.genre} {self.year} {self.creator}"
@@ -26,8 +26,8 @@ class BookRatingModel(models.Model):
     def __str__(self):
         return f"{self.user} {self.book} {self.rating}"
 
-    class Meta:
-        unique_together = ("user", "book")
+    # class Meta:
+    #     unique_together = ("user", "book")
 
 
 class FavoriteBookModel(models.Model):

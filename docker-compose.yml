@@ -44,7 +44,7 @@ services:
       - "6379:6379"
 
   rabbitmq:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:4.0.4-management-alpine
     hostname: rabbitmq
     container_name: rabbitmq
     ports:
@@ -83,17 +83,3 @@ volumes:
   postgres_data:
   rabbitmq-data:
 
-
-#  redis:
-#    image: redis:6.2
-#  rabbitmq:
-#    image: rabbitmq:3-management
-#    ports:
-#      - "15672:15672"
-#      - "5672:5672"
-#  celery:
-#    build: .
-#    command: celery -A app worker --loglevel=info
-#    depends_on:
-#      - redis
-#      - rabbitmq

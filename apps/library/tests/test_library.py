@@ -3,7 +3,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.contrib.auth.models import User
-from apps.library.models import LibraryModel, FavoriteBookModel
+from apps.library.models import LibraryModel, FavoriteBookModel, BookRatingModel
 
 
 @pytest.mark.django_db
@@ -54,3 +54,31 @@ class TestFavoritesAPI:
 
         assert FavoriteBookModel.objects.filter(id=favorite.id, book=self.book).exists()
         assert FavoriteBookModel.objects.filter(user=self.user, book=self.book).count() == 1
+
+    #
+    # def test_create_rating(self):
+    #     rating = BookRatingModel.objects.create(user=self.user, book=self.book)
+    #     url = reverse('set_rating')
+    #     payload = {'book': self.book.id}
+    #     response = self.client.post(url, payload)
+    #
+    #     assert response.status_code == status.HTTP_201_CREATED
+    #     assert BookRatingModel.objects.filter(id=rating.id, book=self.book).exists()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

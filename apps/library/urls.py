@@ -7,7 +7,6 @@ from .views import (
     ListFavoriteAPIView,
     RemoveFavoriteAPIView,
     BookRatingCreateAPIView,
-    # BookRatingUpdateAPIView,
     BookRatingRetrieveAPIView,
     BookRatingRemoveAPIView
 
@@ -20,7 +19,6 @@ urlpatterns = [
     path('favourites/add/', CreateFavoriteAPIView.as_view(), name='add_favorite'),
     path('favourites/remove/<int:pk>/', RemoveFavoriteAPIView.as_view(), name='remove_favorite'),
     path('libraries/set_rating/<int:pk>/', BookRatingCreateAPIView.as_view(), name='set_rating'),
-    # path('libraries/update_rating/<int:pk>/', BookRatingUpdateAPIView.as_view(), name='update_rating'),
     path('libraries/retrieve_rating/<int:pk>/', BookRatingRetrieveAPIView.as_view(), name='retrieve_rating'),
     path('libraries/remove_rating/<int:pk>', BookRatingRemoveAPIView.as_view(), name='remove_rating'),
 ]

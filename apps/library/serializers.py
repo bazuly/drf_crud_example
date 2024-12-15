@@ -13,12 +13,12 @@ class LibraryModelSerializer(serializers.ModelSerializer):
             'genre',
             'year',
             'creator',
-            'average_rating'
+            'rating'
         ]
 
 
 class LibraryRatingModelSerializer(serializers.ModelSerializer):
-    book = LibraryModelSerializer()
+    book = serializers.PrimaryKeyRelatedField(queryset=LibraryModel.objects.all())
 
     class Meta:
         model = BookRatingModel
@@ -29,13 +29,13 @@ class LibraryRatingModelSerializer(serializers.ModelSerializer):
             'rating',
         ]
 
-    def validate(self, data):
-        user = data['user']
-        book = data['book']
-
-        if BookRatingModel.objects.filter(user=user, book=book).exists():
-            raise serializers.ValidationError('You already set rating')
-        return data
+    # def validate(self, data):
+    #     user = data['user']
+    #     book = data['book']
+    #
+    #     if BookRatingModel.objects.filter(user=user, book=book).exists():
+    #         raise serializers.ValidationError('You already set rating')
+    #     return data
 
 
 class FavoriteModelSerializer(serializers.ModelSerializer):
