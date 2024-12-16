@@ -20,19 +20,18 @@ class LibraryModel(models.Model):
 
 class BookRatingModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(LibraryModel, on_delete=models.CASCADE, related_name="ratings")
+    book = models.ForeignKey(
+        LibraryModel, on_delete=models.CASCADE, related_name="ratings")
     rating = models.IntegerField(default=1)
 
     def __str__(self):
         return f"{self.user} {self.book} {self.rating}"
 
-    # class Meta:
-    #     unique_together = ("user", "book")
-
 
 class FavoriteBookModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(LibraryModel, on_delete=models.CASCADE, related_name="favorites")
+    book = models.ForeignKey(
+        LibraryModel, on_delete=models.CASCADE, related_name="favorites")
 
     def __str__(self):
         return f"{self.user} {self.book}"
