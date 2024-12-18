@@ -15,6 +15,7 @@ from .models import LibraryModel, FavoriteBookModel, BookRatingModel
 from .library_pagination import CustomLibraryPagination
 from .filters import LibraryFilter
 from .permissions import IsOwnerOrReadOnly
+from .tasks import book_creation
 
 
 class LibraryListCreateAPIView(ListCreateAPIView):
@@ -44,7 +45,8 @@ class LibraryListCreateAPIView(ListCreateAPIView):
     filterset_class = LibraryFilter
 
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        book = serializer.save(creator=self.request.user)
+        book_creation.delay(book.id, self.request.user.id)
 
 
 class LibraryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -87,7 +89,6 @@ class BookRatingCreateAPIView(CreateAPIView):
     permission_classes = [IsAuthenticated, ]
 
 
-
 class BookRatingRetrieveAPIView(RetrieveAPIView):
     """
     API view for retrieving a book rating.
@@ -126,6 +127,7 @@ class BookRatingRemoveAPIView(DestroyAPIView):
 
     def perform_destroy(self, instance):
         return BookRatingModel.objects.filter(user=self.request.user, id=instance.id).delete()
+
 
 class CreateFavoriteAPIView(CreateAPIView):
     """

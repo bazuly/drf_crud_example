@@ -134,8 +134,6 @@ SWAGGER_SETTINGS = {
 REDIS_HOST = "redis"
 REDIS_PORT = 6379
 
-REDIS_BROKER_URL = "redis://redis:6379/0"
-REDIS_RESULT_BACKEND = "redis://redis:6379/0"
 
 # celery settings
 CELERY_BROKER_URL = "redis://redis:6379/0"

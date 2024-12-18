@@ -40,21 +40,22 @@ services:
 
   redis:
     image: redis:6
+    container_name: redis
     ports:
       - "6379:6379"
 
-  rabbitmq:
-    image: rabbitmq:4.0.4-management-alpine
-    hostname: rabbitmq
-    container_name: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: "guest"
-      RABBITMQ_DEFAULT_PASS: "guest"
-    volumes:
-      - rabbitmq-data:/var/lib/ rabbitmq
+  # rabbitmq:
+  #   image: rabbitmq:4.0.4-management-alpine
+  #   hostname: rabbitmq
+  #   container_name: rabbitmq
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+  #   environment:
+  #     RABBITMQ_DEFAULT_USER: "guest"
+  #     RABBITMQ_DEFAULT_PASS: "guest"
+  #   volumes:
+  #     - rabbitmq-data:/var/lib/rabbitmq
 
 
   celery:
@@ -62,11 +63,13 @@ services:
     command: celery -A hard_train worker --loglevel=info
     volumes:
       - .:/app
-    env_file:
-      - .env
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
     depends_on:
-      - db
       - redis
+      - db
+    networks:
+      - default
 
   flower:
     build: .
@@ -81,5 +84,5 @@ services:
 
 volumes:
   postgres_data:
-  rabbitmq-data:
+  # rabbitmq-data:
 
