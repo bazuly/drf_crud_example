@@ -40,7 +40,8 @@ class LibraryRatingModelSerializer(serializers.ModelSerializer):
 
 
 class FavoriteModelSerializer(serializers.ModelSerializer):
-    book = LibraryModelSerializer()
+    book = serializers.PrimaryKeyRelatedField(
+        queryset=LibraryModel.objects.all())
 
     class Meta:
         model = FavoriteBookModel
@@ -55,5 +56,5 @@ class FavoriteModelSerializer(serializers.ModelSerializer):
         book = data['book']
 
         if FavoriteBookModel.objects.filter(user=user, book=book).exists():
-            raise serializers.ValidationError('Book already in your favourite')
+            raise serializers.ValidationError('Book already in your favorite')
         return data
