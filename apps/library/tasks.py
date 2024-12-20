@@ -10,4 +10,4 @@ def book_creation(book_id, creator_id):
 
     print(f'Book {book.title}, added by user: {user.username}')
 
-    return f"Уведомление для книги '{book.title}' успешно отправлено."
+    return f"Notification for '{book.title}' sent successfully"
