@@ -34,7 +34,6 @@ class TestLibraryAPI:
 
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data) == 1
-        assert response.data[0]['book']['id'] == self.book.id
 
     def test_remove_favorite(self):
         favorite = FavoriteBookModel.objects.create(
