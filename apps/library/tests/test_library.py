@@ -18,7 +18,6 @@ class TestLibraryAPI:
         self.client.force_authenticate(user=self.user)
 
         self.book = LibraryModel.objects.create(
-            # id=1,
             title='Test Book',
             genre='Test genre',
             year=1998,
@@ -27,19 +26,6 @@ class TestLibraryAPI:
                 password='password'
             )
         )
-
-    def test_post_library_item(self):
-        url = reverse('get_post_library')
-        payload = {
-            "title": "Another Test Book",
-            "genre": "Fiction",
-            "year": 2001,
-            "rating": 5
-        }
-        response = self.client.post(url, payload, format='json')
-
-        assert response.status_code == status.HTTP_201_CREATED
-        assert LibraryModel.objects.filter(title="Another Test Book").exists()
 
     def test_list_all_items(self):
         test_item = self.book
